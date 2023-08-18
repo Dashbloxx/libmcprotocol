@@ -8,7 +8,7 @@ SRC_DIR := source
 
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 
-OBJS := $(patsubst $(SRC_DIR)/%.c,$(SRC_DIR)%.o,$(SRCS))
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(SRC_DIR)/%.o,$(SRCS))
 
 LIB := libmcprotocol.a
 
