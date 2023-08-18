@@ -48,8 +48,10 @@ void __packet_handshake(int sockfd, int protocol_version, char * server_address,
 
     packet_size += subpacket_size_varint_size;
 
+#ifdef __DBG
     printf("debug: sending packet => ");
     printh(packet, packet_size);
+#endif
 
     send(sockfd, packet, packet_size, 0);
 
@@ -84,14 +86,13 @@ void __packet_login_start(int sockfd, char * username, char * uuidv4)
 
     packet_size += subpacket_size_varint_size;
 
+#ifdef __DBG
     printf("debug: sending packet => ");
     printh(packet, packet_size);
+#endif
 
     write(sockfd, packet, packet_size);
 
     free(packet);
     free(subpacket);
-
-    packet = malloc(sizeof(char) * BUFFER_SIZE);
-    memset(packet, 0, BUFFER_SIZE);
 }

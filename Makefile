@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -Wall -Wextra -Iinclude
+CFLAGS := -Wall -Wextra -Iinclude -D__DBG
 LDFLAGS :=
 AR := ar
 ARFLAGS := rcs
