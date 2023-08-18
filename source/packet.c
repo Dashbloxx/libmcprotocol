@@ -3,19 +3,30 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <mcprotocol/packet.h>
+#include <mcprotocol/types.h>
+#include <mcprotocol/varint.h>
 
 #define BUFFER_SIZE 512
 
 int send_packet(int sockfd, packet_t packet_type, ...)
 {
+    va_list arguments;
+
     char * packet;
     char * subpacket;
     switch(packet_type)
     {
     case PACKET_HANDSHAKE:
+        va_start(arguments, 4);
         packet = malloc(BUFFER_SIZE);
         subpacket = malloc(BUFFER_SIZE);
+
+        int protocol_version = va_arg(arguments, int);
+        char * server_address = va_arg(arguments, char *);
+        uint16_t server_port = va_arg(arguments, uint16_t);
+        int next_state = va_arg(arguments, int);
 
         int packet_size = 0;
         int subpacket_size = 0;
@@ -46,4 +57,6 @@ int send_packet(int sockfd, packet_t packet_type, ...)
         free(packet);
         free(subpacket);
     }
+
+    va_end(arguments);
 }
