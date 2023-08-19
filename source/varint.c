@@ -31,12 +31,12 @@ int decode_varint(const unsigned char * buffer, int *value)
     return index;
 }
 
-int count_varint(unsigned char *pointer)
+int count_varint(unsigned char * buffer)
 {
     int size = 0;
-    while (*pointer & 0x80)
+    while (*buffer & 0x80)
     {
-        pointer++;
+        buffer++;
         size++;
     }
     size++;

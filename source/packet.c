@@ -10,6 +10,8 @@
 
 #define BUFFER_SIZE 512
 
+state_t current_state;
+
 static void printh(void * data, size_t size)
 {
     const unsigned char * bytes = (const unsigned char *)data;
@@ -95,4 +97,35 @@ void __packet_login_start(int sockfd, char * username, char * uuidv4)
 
     free(packet);
     free(subpacket);
+}
+
+void __handle_clientbound_packet(int sockfd)
+{
+    unsigned char * packet = malloc(sizeof(char) * BUFFER_SIZE);
+    recv(sockfd, packet, BUFFER_SIZE, 0);
+    
+    int packet_size = -1;
+    int packet_size_varint_size = decode_varint(packet, &packet_size);
+    int counter = 0;
+    counter += packet_size_varint_size;
+    const int packet_type = packet[counter];
+
+    switch(packet_type)
+    {
+    case 0x01:
+        switch(current_state)
+        {
+        case STATE_LOGIN:
+            
+            break;
+        case STATE_PLAY:
+            break;
+        }
+        break;
+    }
+
+    printh(packet, 512);
+    printf("packet size: %d.\nvarint size: %d.\n", packet_size, packet_size_varint_size);
+
+    free(packet);
 }
