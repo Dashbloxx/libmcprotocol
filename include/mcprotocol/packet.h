@@ -8,10 +8,14 @@ typedef enum
     STATE_PLAY
 } state_t;
 
-typedef enum
+typedef struct
 {
-
-} 
+    char * server_id;
+    int public_key_length;
+    unsigned char * public_key;
+    int verify_token_length;
+    unsigned char * verify_token;
+} encryption_request_t;
 
 extern state_t current_state;
 
